@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shadowsocks 终极使用指南 2025 | SS/SSR 全平台配置教程</title>
+  <meta name="description" content="最全面的 Shadowsocks 使用指南，涵盖 Windows、Android、iOS、macOS、Linux 全平台配置教程，以及 Chrome 浏览器 SwitchyOmega 插件设置、美区 Apple ID 获取方法。" />
+  <meta name="keywords" content="Shadowsocks教程,SS使用方法,SSR配置,小火箭,SwitchyOmega,美区Apple ID,网络代理,全平台SS教程" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="shadowsockshelp" />
+  <link rel="canonical" href="https://hi-bill.github.io/shadowsockshelp/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Shadowsocks 终极使用指南 2025 | 全平台配置教程" />
+  <meta property="og:description" content="最全面的 Shadowsocks 使用与配置指南，Windows/Android/iOS/Mac/Linux 全平台覆盖，附美区 Apple ID 获取教程。" />
+  <meta property="og:url" content="https://hi-bill.github.io/shadowsockshelp/" />
+  <meta property="og:locale" content="zh_CN" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Shadowsocks 终极使用指南 2025" />
+  <meta name="twitter:description" content="全平台 SS 配置教程，Windows/Android/iOS/Mac/Linux，附美区 Apple ID 教程。" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Shadowsocks 终极使用指南 2025",
+    "description": "覆盖全平台的 Shadowsocks 配置教程，包括 Windows、Android、iOS、macOS、Linux 及浏览器插件设置",
+    "author": {"@type": "Organization", "name": "shadowsockshelp"},
+    "publisher": {"@type": "Organization", "name": "shadowsockshelp"},
+    "dateModified": "2025-01-01",
+    "mainEntityOfPage": {"@type": "WebPage", "@id": "https://hi-bill.github.io/shadowsockshelp/"}
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "Shadowsocks 和 VPN 有什么区别？", "acceptedAnswer": {"@type": "Answer", "text": "Shadowsocks 是一种基于 SOCKS5 的代理协议，流量特征更难被识别，通常比传统 VPN 更稳定。VPN 会加密所有流量并改变 IP，而 SS 支持按规则分流，可以让国内网站走直连、海外网站走代理。"}},
+      {"@type": "Question", "name": "iOS 上如何使用 Shadowsocks？", "acceptedAnswer": {"@type": "Answer", "text": "iOS 系统需要通过美区 Apple ID 在 App Store 下载 Shadowrocket（小火箭）等代理工具，因为这类应用在中国区 App Store 已下架。获取美区账号后即可安装。"}},
+      {"@type": "Question", "name": "小火箭（Shadowrocket）在哪里购买？", "acceptedAnswer": {"@type": "Answer", "text": "小火箭是美区 App Store 的付费应用，需要用美区 Apple ID 登录后购买。可以通过 ReeGifts 等平台获取美区账号和礼品卡，再自行购买。"}}
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:       #0d1117;
+      --ink-2:     #161b22;
+      --ink-3:     #21262d;
+      --rule:      #30363d;
+      --muted:     #8b949e;
+      --text:      #e6edf3;
+      --text-2:    #c9d1d9;
+      --accent:    #58a6ff;
+      --accent-2:  #79c0ff;
+      --green:     #3fb950;
+      --orange:    #f0883e;
+      --purple:    #bc8cff;
+      --red:       #ff7b72;
+      --gold:      #e3b341;
+      --serif:     'Lora', Georgia, serif;
+      --display:   'Syne', sans-serif;
+      --mono:      'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background: var(--ink);
+      color: var(--text-2);
+      font-family: var(--serif);
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* ── GRID TEXTURE ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(88,166,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(88,166,255,.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── GLOW ── */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(130px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .orb-1 { width: 700px; height: 500px; background: rgba(88,166,255,.07); top: -200px; left: -200px; }
+    .orb-2 { width: 500px; height: 500px; background: rgba(63,185,80,.05); bottom: 0; right: -100px; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(13,17,23,.92);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0 clamp(1rem, 4vw, 3rem);
+      height: 56px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: .02em;
+      white-space: nowrap;
+    }
+    .nav-brand .dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: blink 2.5s ease infinite; }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .nav-links a {
+      display: block;
+      padding: .3rem .65rem;
+      font-family: var(--display);
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      border-radius: 5px;
+      transition: color .2s, background .2s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover { color: var(--text); background: var(--ink-3); }
+    .nav-buy {
+      font-family: var(--display);
+      font-size: .78rem;
+      font-weight: 700;
+      background: var(--accent);
+      color: var(--ink) !important;
+      padding: .3rem .85rem !important;
+      border-radius: 6px !important;
+      transition: opacity .2s !important;
+    }
+    .nav-buy:hover { opacity: .8; background: transparent !important; color: var(--accent) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      padding: clamp(3.5rem,10vw,7rem) clamp(1rem,5vw,3rem) clamp(2.5rem,7vw,5rem);
+      max-width: 820px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-family: var(--mono);
+      font-size: .7rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(88,166,255,.1);
+      border: 1px solid rgba(88,166,255,.25);
+      border-radius: 100px;
+      padding: .25rem .85rem;
+      margin-bottom: 1.5rem;
+      animation: fadeUp .5s ease both;
+    }
+
+    .hero h1 {
+      font-family: var(--display);
+      font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -.03em;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      animation: fadeUp .6s .08s ease both;
+    }
+    .hero h1 .hl { color: var(--accent); }
+    .hero h1 .hl2 { color: var(--green); }
+
+    .hero-lead {
+      font-family: var(--serif);
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      animation: fadeUp .6s .16s ease both;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: .75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp .6s .24s ease both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: .88rem;
+      padding: .65rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s, opacity .2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-solid { background: var(--accent); color: var(--ink); box-shadow: 0 4px 20px rgba(88,166,255,.3); }
+    .btn-solid:hover { box-shadow: 0 8px 30px rgba(88,166,255,.45); }
+    .btn-outline { background: transparent; color: var(--text-2); border: 1px solid var(--rule); }
+    .btn-outline:hover { border-color: var(--muted); background: var(--ink-2); }
+
+    /* ── DIVIDER ── */
+    .rule-line {
+      position: relative;
+      z-index: 1;
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 0;
+    }
+
+    /* ── PLATFORM STRIP ── */
+    .platform-strip {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0;
+      border-bottom: 1px solid var(--rule);
+      animation: fadeUp .6s .3s ease both;
+    }
+    .plat-item {
+      flex: 1 1 120px;
+      padding: 1.2rem .5rem;
+      text-align: center;
+      border-right: 1px solid var(--rule);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .3rem;
+    }
+    .plat-item:last-child { border-right: none; }
+    .plat-item .pi { font-size: 1.5rem; }
+    .plat-item span { font-family: var(--display); font-size: .72rem; font-weight: 600; color: var(--muted); }
+
+    /* ── CONTAINER ── */
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 clamp(1rem, 4vw, 3rem);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── SECTION LABEL ── */
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: .68rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: .6rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .eyebrow::after { content: ''; flex: 0 0 32px; height: 1px; background: var(--accent); opacity: .5; }
+
+    .sh2 {
+      font-family: var(--display);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -.025em;
+      color: var(--text);
+      margin-bottom: .6rem;
+      line-height: 1.2;
+    }
+    .sdesc { color: var(--muted); font-size: .92rem; margin-bottom: 2rem; }
+
+    section.pad { padding: 4rem 0; }
+
+    /* ── TUTORIAL GRID ── */
+    .tut-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .tut-card {
+      background: var(--ink-2);
+      padding: 1.5rem;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: .7rem;
+      transition: background .2s;
+      position: relative;
+    }
+    .tut-card:hover { background: var(--ink-3); }
+    .tut-card:hover .tc-arrow { transform: translate(3px,-3px); }
+
+    .tc-top { display: flex; align-items: flex-start; justify-content: space-between; gap: .5rem; }
+    .tc-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .tc-arrow {
+      color: var(--muted);
+      font-size: 1rem;
+      transition: transform .2s;
+      margin-top: 2px;
+    }
+    .tc-title {
+      font-family: var(--display);
+      font-size: .92rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.35;
+    }
+    .tc-desc { font-size: .82rem; color: var(--muted); line-height: 1.6; }
+    .tc-badge {
+      display: inline-flex;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: .65rem;
+      padding: .15rem .5rem;
+      border-radius: 4px;
+      font-weight: 500;
+      align-self: flex-start;
+    }
+
+    /* ── DOWNLOAD SECTION ── */
+    .dl-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: .75rem;
+    }
+    .dl-card {
+      background: var(--ink-2);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      padding: 1.1rem 1.1rem;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      transition: border-color .2s, background .2s;
+    }
+    .dl-card:hover { border-color: var(--accent); background: var(--ink-3); }
+    .dl-icon { font-size: 1.6rem; flex-shrink: 0; }
+    .dl-info .dl-name { font-family: var(--display); font-size: .85rem; font-weight: 700; color: var(--text); }
+    .dl-info .dl-ver  { font-family: var(--mono); font-size: .68rem; color: var(--muted); }
+
+    /* ── REVIEWS ── */
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    .review-card {
+      background: var(--ink-2);
+      border: 1px solid var(--rule);
+      border-radius: 14px;
+      padding: 1.4rem;
+    }
+    .rv-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: .75rem; }
+    .rv-user { display: flex; align-items: center; gap: .65rem; }
+    .rv-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .85rem;
+      font-family: var(--display);
+      font-weight: 700;
+      color: var(--ink);
+      flex-shrink: 0;
+    }
+    .rv-name { font-family: var(--display); font-size: .85rem; font-weight: 700; color: var(--text); }
+    .rv-role { font-size: .72rem; color: var(--muted); }
+    .rv-stars { color: var(--gold); font-size: .85rem; letter-spacing: .05em; }
+    .rv-text { font-size: .87rem; color: var(--text-2); line-height: 1.7; font-style: italic; }
+    .rv-tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: .65rem;
+      color: var(--green);
+      background: rgba(63,185,80,.1);
+      border: 1px solid rgba(63,185,80,.2);
+      border-radius: 4px;
+      padding: .1rem .45rem;
+      margin-top: .75rem;
+    }
+
+    /* ── CASES ── */
+    .cases-list { display: flex; flex-direction: column; gap: .75rem; }
+    .case-item {
+      background: var(--ink-2);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      padding: 1.1rem 1.25rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .case-num {
+      flex-shrink: 0;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--ink-3);
+      border: 1px solid var(--rule);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--mono);
+      font-size: .7rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .case-body .case-title { font-family: var(--display); font-size: .88rem; font-weight: 700; color: var(--text); margin-bottom: .25rem; }
+    .case-body .case-desc  { font-size: .83rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── FAQ ── */
+    .faq-list { display: flex; flex-direction: column; gap: .6rem; }
+    .faq-item {
+      background: var(--ink-2);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .faq-btn {
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-family: var(--display);
+      font-size: .9rem;
+      font-weight: 700;
+      padding: 1rem 1.25rem;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: .5rem;
+      transition: color .2s;
+    }
+    .faq-btn:hover { color: var(--accent); }
+    .faq-icon { flex-shrink: 0; font-size: 1.1rem; color: var(--muted); transition: transform .3s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); color: var(--accent); }
+    .faq-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .35s ease, padding .35s;
+      font-size: .87rem;
+      color: var(--muted);
+      padding: 0 1.25rem;
+      line-height: 1.75;
+    }
+    .faq-item.open .faq-body { max-height: 300px; padding: 0 1.25rem 1.1rem; }
+
+    /* ── CTA ── */
+    .cta-wrap {
+      background: linear-gradient(135deg, var(--ink-2) 0%, rgba(88,166,255,.08) 100%);
+      border: 1px solid rgba(88,166,255,.25);
+      border-radius: 18px;
+      padding: clamp(2rem,6vw,3.5rem) clamp(1.5rem,5vw,3rem);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      margin: 1rem 0 4rem;
+    }
+    .cta-wrap::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: 50%;
+      transform: translateX(-50%);
+      width: 350px; height: 350px;
+      background: radial-gradient(circle, rgba(88,166,255,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-wrap h2 {
+      font-family: var(--display);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -.025em;
+      color: var(--text);
+      margin-bottom: .65rem;
+    }
+    .cta-wrap p { color: var(--muted); font-size: .93rem; margin-bottom: 1.75rem; }
+    .cta-perks {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: .4rem 1.2rem;
+      margin-bottom: 1.75rem;
+      font-family: var(--mono);
+      font-size: .75rem;
+      color: var(--accent-2);
+    }
+    .cta-perks span::before { content: '✓ '; }
+    .disclaimer { font-family: var(--mono); font-size: .68rem; color: var(--muted); margin-top: 1rem; opacity: .7; }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--rule);
+      padding: 2rem clamp(1rem, 4vw, 3rem);
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem 2rem;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: .72rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--muted); text-decoration: none; transition: color .2s; }
+    footer a:hover { color: var(--text); }
+
+    /* ── KEYFRAMES ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes blink {
+      0%,100% { opacity:1; } 50% { opacity:.3; }
+    }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* ── MOBILE ── */
+    @media(max-width:640px){
+      .nav-links { display:none; }
+      .plat-item { flex:1 1 33%; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<!-- ── NAV ── -->
+<nav role="navigation" aria-label="主导航">
+  <a href="#" class="nav-brand" aria-label="首页">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <rect width="20" height="20" rx="5" fill="#58a6ff"/>
+      <path d="M5 10.5 Q10 4 15 10.5 Q10 17 5 10.5Z" fill="white" opacity=".9"/>
+    </svg>
+    ShadowsocksHelp
+    <span class="dot"></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#tutorials">教程</a></li>
+    <li><a href="#download">下载</a></li>
+    <li><a href="#apple-id">美区ID</a></li>
+    <li><a href="#reviews">用户评价</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="https://www.reegifts.com/" target="_blank" rel="noopener" class="nav-buy">购买小火箭 →</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<header class="hero" role="banner">
+  <div class="hero-tag">2025 年持续更新 · 全平台覆盖</div>
+  <h1>
+    <span class="hl">Shadowsocks</span> 终极<br/>
+    使用与配置<span class="hl2">指南</span>
+  </h1>
+  <p class="hero-lead">
+    一站式 SS/SSR 学习中心。从客户端下载、节点配置，到浏览器分流插件、iOS 小火箭安装，
+    手把手教程覆盖 Windows / Android / iOS / macOS / Linux 全平台。
+  </p>
+  <div class="hero-btns">
+    <a href="#tutorials" class="btn btn-solid">📖 开始阅读教程</a>
+    <a href="https://www.reegifts.com/" target="_blank" rel="noopener" class="btn btn-outline">🛒 获取小火箭账号</a>
+  </div>
+</header>
+
+<hr class="rule-line" />
+
+<!-- ── PLATFORM STRIP ── -->
+<div class="platform-strip" aria-label="支持平台">
+  <div class="plat-item"><span class="pi">🪟</span><span>Windows</span></div>
+  <div class="plat-item"><span class="pi">🤖</span><span>Android</span></div>
+  <div class="plat-item"><span class="pi">📱</span><span>iOS</span></div>
+  <div class="plat-item"><span class="pi">🍏</span><span>macOS</span></div>
+  <div class="plat-item"><span class="pi">🐧</span><span>Linux</span></div>
+  <div class="plat-item"><span class="pi">🌐</span><span>Chrome</span></div>
+</div>
+
+<main>
+
+<!-- ── TUTORIALS ── -->
+<section id="tutorials" class="pad wrap">
+  <div class="reveal">
+    <div class="eyebrow">核心教程</div>
+    <h2 class="sh2">全平台配置教程索引</h2>
+    <p class="sdesc">根据你的设备选择对应的平台教程，每篇均包含截图演示，步骤清晰易懂。</p>
+  </div>
+  <div class="tut-grid reveal">
+
+    <a href="https://www.reegifts.com/article/224" target="_blank" rel="noopener" class="tut-card" aria-label="Windows 教程">
+      <div class="tc-top">
+        <div class="tc-icon" style="background:rgba(88,166,255,.12)">🪟</div>
+        <span class="tc-arrow">↗</span>
+      </div>
+      <div class="tc-title">Windows 配置教程</div>
+      <div class="tc-desc">在 Windows 10/11 上安装 Shadowsocks 客户端，配置 PAC 分流与系统代理的完整图文步骤。</div>
+      <span class="tc-badge" style="background:rgba(88,166,255,.1);color:var(--accent);">Win 10 / 11</span>
+    </a>
+
+    <a href="https://www.reegifts.com/article/225" target="_blank" rel="noopener" class="tut-card" aria-label="Android 教程">
+      <div class="tc-top">
+        <div class="tc-icon" style="background:rgba(63,185,80,.1)">🤖</div>
+        <span class="tc-arrow">↗</span>
+      </div>
+      <div class="tc-title">Android 配置教程</div>
+      <div class="tc-desc">安卓手机安装 Shadowsocks APK，扫码导入节点，开启代理的全流程操作指引。</div>
+      <span class="tc-badge" style="background:rgba(63,185,80,.1);color:var(--green);">Android 5+</span>
+    </a>
+
+    <a href="https://www.reegifts.com/article/226" target="_blank" rel="noopener" class="tut-card" aria-label="iOS 小火箭教程">
+      <div class="tc-top">
+        <div class="tc-icon" style="background:rgba(188,140,255,.1)">📱</div>
+        <span class="tc-arrow">↗</span>
+      </div>
+      <div class="tc-title">iOS 小火箭教程</div>
+      <div class="tc-desc">苹果 iPhone / iPad 通过美区 Apple ID 下载 Shadowrocket，配置 SS/SSR 节点的详细教程。</div>
+      <span class="tc-badge" style="background:rgba(188,140,255,.1);color:var(--purple);">Shadowrocket</span>
+    </a>
+
+    <a href="https://www.reegifts.com/article/227" target="_blank" rel="noopener" class="tut-card" aria-label="macOS 教程">
+      <div class="tc-top">
+        <div class="tc-icon" style="background:rgba(240,136,62,.1)">🍏</div>
+        <span class="tc-arrow">↗</span>
+      </div>
+      <div class="tc-title">macOS 配置教程</div>
+      <div class="tc-desc">Mac 电脑安装 ShadowsocksX-NG，Intel 与 Apple M 系列芯片兼容，托盘图标操作全解析。</div>
+      <span class="tc-badge" style="background:rgba(240,136,62,.1);color:var(--orange);">Intel / M 系列</span>
+    </a>
+
+    <a href="https://www.reegifts.com/article/228" target="_blank" rel="noopener" class="tut-card" aria-label="Linux 教程">
+      <div class="tc-top">
+        <div class="tc-icon" style="background:rgba(255,123,114,.1)">🐧</div>
+        <span class="tc-arrow">↗</span>
+      </div>
+      <div class="tc-title">Linux 配置教程</div>
+      <div class="tc-desc">Ubuntu / Debian / Fedora 等发行版通过 AppImage 包运行 Shadowsocks-Qt5 的部署指南。</div>
+      <span class="tc-badge" style="background:rgba(255,123,114,.1);color:var(--red);">Ubuntu / Debian</span>
+    </a>
+
+    <a href="https://www.reegifts.com/article/229" target="_blank" rel="noopener" class="tut-card" aria-label="Chrome SwitchyOmega 教程">
+      <div class="tc-top">
+        <div class="tc-icon" style="background:rgba(227,179,65,.1)">🌐</div>
+        <span class="tc-arrow">↗</span>
+      </div>
+      <div class="tc-title">Chrome SwitchyOmega 教程</div>
+      <div class="tc-desc">谷歌 Chrome 安装 Proxy SwitchyOmega 插件，配置自动切换模式与 GFWList 分流规则。</div>
+      <span class="tc-badge" style="background:rgba(227,179,65,.1);color:var(--gold);">Chrome 扩展</span>
+    </a>
+
+    <a href="https://www.reegifts.com/article/229#omega-step-2" target="_blank" rel="noopener" class="tut-card" aria-label="Firefox 教程">
+      <div class="tc-top">
+        <div class="tc-icon" style="background:rgba(240,136,62,.1)">🦊</div>
+        <span class="tc-arrow">↗</span>
+      </div>
+      <div class="tc-title">Firefox 配置教程</div>
+      <div class="tc-desc">Firefox Quantum 搭配 Proxy SwitchyOmega 插件配置代理规则，与 Chrome 版操作基本相同。</div>
+      <span class="tc-badge" style="background:rgba(240,136,62,.1);color:var(--orange);">Firefox</span>
+    </a>
+
+    <a href="https://www.reegifts.com/article/230" target="_blank" rel="noopener" class="tut-card" aria-label="客户端下载">
+      <div class="tc-top">
+        <div class="tc-icon" style="background:rgba(88,166,255,.12)">📦</div>
+        <span class="tc-arrow">↗</span>
+      </div>
+      <div class="tc-title">全平台客户端下载</div>
+      <div class="tc-desc">Windows / Android / iOS / macOS / Linux 各版本 Shadowsocks 客户端纯净备用下载镜像合集。</div>
+      <span class="tc-badge" style="background:rgba(88,166,255,.1);color:var(--accent);">备用镜像</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- ── DOWNLOAD ── -->
+<section id="download" class="pad wrap">
+  <div class="reveal">
+    <div class="eyebrow">快速下载</div>
+    <h2 class="sh2">Shadowsocks 客户端直链</h2>
+    <p class="sdesc">以下为各平台主流版本的快速直链，完整下载列表请查看<a href="https://www.reegifts.com/article/230" target="_blank" rel="noopener" style="color:var(--accent);">全平台下载页面</a>。</p>
+  </div>
+  <div class="dl-grid reveal">
+    <a href="https://raw.githubusercontent.com/ShadowsocksHelp/Shadowsocks/master/Download/Shadowsocks-4.1.7.1.zip" class="dl-card" rel="nofollow noopener" target="_blank">
+      <span class="dl-icon">🪟</span>
+      <div class="dl-info"><div class="dl-name">Windows 稳定版</div><div class="dl-ver">v4.1.7.1 · Win10/11</div></div>
+    </a>
+    <a href="https://raw.githubusercontent.com/ShadowsocksHelp/Shadowsocks/master/Download/shadowsocks--universal-4.8.1.apk" class="dl-card" rel="nofollow noopener" target="_blank">
+      <span class="dl-icon">🤖</span>
+      <div class="dl-info"><div class="dl-name">Android 通用版</div><div class="dl-ver">v4.8.1 · Universal APK</div></div>
+    </a>
+    <a href="https://raw.githubusercontent.com/ShadowsocksHelp/Shadowsocks/master/Download/ShadowsocksX-NG.app.1.8.2.zip" class="dl-card" rel="nofollow noopener" target="_blank">
+      <span class="dl-icon">🍏</span>
+      <div class="dl-info"><div class="dl-name">macOS NG 版</div><div class="dl-ver">v1.8.2 · Intel/M系列</div></div>
+    </a>
+    <a href="https://raw.githubusercontent.com/ShadowsocksHelp/Shadowsocks/master/Download/Shadowsocks-Qt5-3.0.1-x86_64.AppImage" class="dl-card" rel="nofollow noopener" target="_blank">
+      <span class="dl-icon">🐧</span>
+      <div class="dl-info"><div class="dl-name">Linux AppImage</div><div class="dl-ver">Qt5 3.0.1 · x86_64</div></div>
+    </a>
+  </div>
+  <p style="margin-top:1rem;font-size:.78rem;color:var(--muted);">📌 iOS 用户需通过美区 Apple ID 在 App Store 购买 Shadowrocket，<a href="#apple-id" style="color:var(--accent);">查看获取方法 →</a></p>
+</section>
+
+<!-- ── APPLE ID ── -->
+<section id="apple-id" class="pad wrap">
+  <div class="reveal">
+    <div class="eyebrow">iOS 专区</div>
+    <h2 class="sh2">苹果美区 Apple ID 指南</h2>
+    <p class="sdesc">iOS 上的代理工具（如 Shadowrocket）只在美区 App Store 上架，需要用美区账号登录才能下载。</p>
+  </div>
+  <div class="tut-grid reveal" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));">
+    <a href="https://www.reegifts.com/article/apple-id" target="_blank" rel="noopener" class="tut-card">
+      <div class="tc-top">
+        <div class="tc-icon" style="background:rgba(188,140,255,.12)">🔑</div>
+        <span class="tc-arrow">↗</span>
+      </div>
+      <div class="tc-title">如何注册美区 Apple ID</div>
+      <div class="tc-desc">完整的自助注册教程，包括选择免税州地址、邮箱验证、设置免绑定付款方式等关键步骤。</div>
+      <span class="tc-badge" style="background:rgba(188,140,255,.1);color:var(--purple);">免费注册</span>
+    </a>
+    <a href="https://www.reegifts.com/buy/11" target="_blank" rel="noopener" class="tut-card">
+      <div class="tc-top">
+        <div class="tc-icon" style="background:rgba(63,185,80,.1)">🛒</div>
+        <span class="tc-arrow">↗</span>
+      </div>
+      <div class="tc-title">购买现成美区账号</div>
+      <div class="tc-desc">不想花时间注册？通过 ReeGifts 直接购买可用的美区 Apple ID，几分钟内即可登录 App Store 下载小火箭。</div>
+      <span class="tc-badge" style="background:rgba(63,185,80,.1);color:var(--green);">推荐新手</span>
+    </a>
+    <div class="tut-card" style="cursor:default;">
+      <div class="tc-top">
+        <div class="tc-icon" style="background:rgba(240,136,62,.1)">📋</div>
+      </div>
+      <div class="tc-title">iOS 下载注意事项</div>
+      <div class="tc-desc">
+        只在 App Store 切换账号，不要在「设置 → Apple ID」里登录；下载完成后可切回国区账号，已安装 App 正常使用。
+      </div>
+      <span class="tc-badge" style="background:rgba(240,136,62,.1);color:var(--orange);">重要提示</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── REVIEWS ── -->
+<section id="reviews" class="pad wrap">
+  <div class="reveal">
+    <div class="eyebrow">用户评价</div>
+    <h2 class="sh2">真实用户的使用反馈</h2>
+    <p class="sdesc">来自不同平台和使用场景的真实用户分享，供参考。</p>
+  </div>
+  <div class="reviews-grid reveal">
+
+    <div class="review-card">
+      <div class="rv-top">
+        <div class="rv-user">
+          <div class="rv-avatar" style="background:#58a6ff;">L</div>
+          <div><div class="rv-name">LiuYang_Dev</div><div class="rv-role">软件工程师 · 北京</div></div>
+        </div>
+        <div class="rv-stars">★★★★★</div>
+      </div>
+      <p class="rv-text">「按照 Windows 教程配置好 SwitchyOmega 之后，GitHub、Stack Overflow 全都秒开，国内网站完全不受影响。自动切换模式太好用了，完全不用每次手动切换。」</p>
+      <span class="rv-tag">✓ 已验证 · Chrome 插件教程</span>
+    </div>
+
+    <div class="review-card">
+      <div class="rv-top">
+        <div class="rv-user">
+          <div class="rv-avatar" style="background:#3fb950;">M</div>
+          <div><div class="rv-name">MeiLing_2025</div><div class="rv-role">设计师 · 上海</div></div>
+        </div>
+        <div class="rv-stars">★★★★★</div>
+      </div>
+      <p class="rv-text">「从 ReeGifts 买了美区 Apple ID，10 分钟不到就把小火箭装好了。以前一直用安卓，换 iPhone 之后一直不知道怎么弄，这个教程终于救了我。」</p>
+      <span class="rv-tag">✓ 已验证 · iOS 小火箭</span>
+    </div>
+
+    <div class="review-card">
+      <div class="rv-top">
+        <div class="rv-user">
+          <div class="rv-avatar" style="background:#bc8cff;">Z</div>
+          <div><div class="rv-name">ZhangWei_PhD</div><div class="rv-role">研究生 · 广州</div></div>
+        </div>
+        <div class="rv-stars">★★★★☆</div>
+      </div>
+      <p class="rv-text">「做学术研究经常需要访问 Google Scholar 和 arXiv，按照这个 Linux 教程在 Ubuntu 上配好了 Shadowsocks-Qt5，稳定性比之前用的工具好很多。」</p>
+      <span class="rv-tag">✓ 已验证 · Linux 教程</span>
+    </div>
+
+    <div class="review-card">
+      <div class="rv-top">
+        <div class="rv-user">
+          <div class="rv-avatar" style="background:#f0883e;">C</div>
+          <div><div class="rv-name">ChenXiaoMing</div><div class="rv-role">跨境电商 · 深圳</div></div>
+        </div>
+        <div class="rv-stars">★★★★★</div>
+      </div>
+      <p class="rv-text">「做亚马逊店铺需要经常登 Seller Central，安卓手机参照这里的教程装了 SS，扫码导入节点，5 分钟搞定，以前总是绕不开那个坑，现在终于顺了。」</p>
+      <span class="rv-tag">✓ 已验证 · Android 教程</span>
+    </div>
+
+    <div class="review-card">
+      <div class="rv-top">
+        <div class="rv-user">
+          <div class="rv-avatar" style="background:#e3b341;">W</div>
+          <div><div class="rv-name">WangFang_Mac</div><div class="rv-role">市场运营 · 杭州</div></div>
+        </div>
+        <div class="rv-stars">★★★★★</div>
+      </div>
+      <p class="rv-text">「Mac 端的 ShadowsocksX-NG 教程写得非常清楚，从下载到托盘配置，每一步都有图，即使完全没有技术背景的我也一次成功了。感谢这么详细的教程！」</p>
+      <span class="rv-tag">✓ 已验证 · macOS 教程</span>
+    </div>
+
+    <div class="review-card">
+      <div class="rv-top">
+        <div class="rv-user">
+          <div class="rv-avatar" style="background:#79c0ff;">H</div>
+          <div><div class="rv-name">HuJunTech</div><div class="rv-role">IT 运维 · 成都</div></div>
+        </div>
+        <div class="rv-stars">★★★★★</div>
+      </div>
+      <p class="rv-text">「全平台下载镜像那篇文章非常实用，公司几台不同架构的安卓设备下载对应的 APK，不用再猜测该装哪个版本。备用镜像也解决了官方 GitHub 有时下载慢的问题。」</p>
+      <span class="rv-tag">✓ 已验证 · 全平台下载</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── CASES ── -->
+<section class="pad wrap">
+  <div class="reveal">
+    <div class="eyebrow">购买案例</div>
+    <h2 class="sh2">典型使用场景参考</h2>
+    <p class="sdesc">不同用户群体如何通过 Shadowsocks 解决实际需求，供参考。</p>
+  </div>
+  <div class="cases-list reveal">
+    <div class="case-item">
+      <div class="case-num">01</div>
+      <div class="case-body">
+        <div class="case-title">🎓 留学生备考 · GRE / TOEFL 资料查阅</div>
+        <div class="case-desc">备考期间需要访问 ETS 官网、Magoosh、Khan Academy 等海外学习平台。通过 Windows 端配置 Shadowsocks + SwitchyOmega，实现国内外网站的无缝切换，不影响日常使用国内视频和社交平台。</div>
+      </div>
+    </div>
+    <div class="case-item">
+      <div class="case-num">02</div>
+      <div class="case-body">
+        <div class="case-title">🧑‍💻 程序员 · GitHub / npm / Docker Hub 提速</div>
+        <div class="case-desc">开发工作中频繁需要拉取 GitHub 代码、下载 npm 包、拉取 Docker 镜像。配置 SS 后并搭配 SwitchyOmega 自动规则，技术类资源访问速度大幅提升，而国内 CDN 资源仍走直连，综合体验最佳。</div>
+      </div>
+    </div>
+    <div class="case-item">
+      <div class="case-num">03</div>
+      <div class="case-body">
+        <div class="case-title">📊 跨境电商 · 亚马逊 / Shopify 后台管理</div>
+        <div class="case-desc">日常需要登录亚马逊卖家后台、Shopify 管理端、PayPal 等平台。安卓手机安装 Shadowsocks 后，这些平台的访问速度和稳定性均有明显改善，减少了因连接不稳定导致的操作失败问题。</div>
+      </div>
+    </div>
+    <div class="case-item">
+      <div class="case-num">04</div>
+      <div class="case-body">
+        <div class="case-title">🤖 AI 工具用户 · ChatGPT / Claude 日常使用</div>
+        <div class="case-desc">需要稳定访问 ChatGPT、Claude 等 AI 服务。iPhone 用户通过购买美区 Apple ID 下载 Shadowrocket，配置好订阅链接后，AI 工具的使用体验大幅提升，同时也可以在美区 App Store 下载其他海外应用。</div>
+      </div>
+    </div>
+    <div class="case-item">
+      <div class="case-num">05</div>
+      <div class="case-body">
+        <div class="case-title">🎵 媒体娱乐 · Spotify / YouTube / TikTok 国际版</div>
+        <div class="case-desc">日常收听 Spotify 音乐、观看 YouTube 视频、刷 TikTok 国际版内容。iOS 用户通过美区账号下载这些应用，结合 Shadowrocket 配置代理，可以流畅使用国际版娱乐内容，访问各平台完整功能。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section id="faq" class="pad wrap">
+  <div class="reveal">
+    <div class="eyebrow">常见问题</div>
+    <h2 class="sh2">FAQ · 用户最常问的问题</h2>
+    <p class="sdesc">整理了使用过程中最常遇到的问题和解答。</p>
+  </div>
+  <div class="faq-list reveal" role="list">
+    <div class="faq-item" role="listitem">
+      <button class="faq-btn" aria-expanded="false">
+        Shadowsocks 和 VPN 有什么区别？
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-body">
+        Shadowsocks 是基于 SOCKS5 协议的代理工具，流量经过混淆后特征更难被识别，通常比传统 VPN 更稳定。
+        VPN 会加密所有流量并改变 IP，而 SS 支持按规则分流——国内网站走直连、海外网站走代理，速度和体验更好。
+      </div>
+    </div>
+    <div class="faq-item" role="listitem">
+      <button class="faq-btn" aria-expanded="false">
+        iOS 上如何使用 Shadowsocks？
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-body">
+        iOS 系统需要通过美区 Apple ID 在 App Store 下载 Shadowrocket（小火箭）等代理客户端，因为这类应用在中国区 App Store 已下架。
+        获取美区账号后登录 App Store，搜索并购买 Shadowrocket（一次性付费约 $2.99），即可安装使用。
+      </div>
+    </div>
+    <div class="faq-item" role="listitem">
+      <button class="faq-btn" aria-expanded="false">
+        小火箭在哪里购买？如何获取美区 Apple ID？
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-body">
+        两种方式：① 自行注册美区 Apple ID（需要美国地址信息，约 30–60 分钟）；
+        ② 通过 ReeGifts 等平台购买现成账号，5 分钟内即可使用。
+        获得美区账号后在 App Store 搜索「Shadowrocket」直接购买安装即可。
+      </div>
+    </div>
+    <div class="faq-item" role="listitem">
+      <button class="faq-btn" aria-expanded="false">
+        切换美区 Apple ID 会影响国区数据吗？
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-body">
+        不会，只要在 App Store 中切换账号（点击右上角头像 → 退出登录），而不是在「设置 → Apple ID」里切换，
+        国区的 iCloud 照片、通讯录等数据完全不受影响。两个账号独立运行，互不干扰。
+      </div>
+    </div>
+    <div class="faq-item" role="listitem">
+      <button class="faq-btn" aria-expanded="false">
+        SwitchyOmega 的「自动切换」模式是什么原理？
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-body">
+        自动切换模式结合开源 GFWList 规则库，自动判断当前访问的域名是否在屏蔽名单中。
+        国内网站（淘宝、微博等）走直连，被屏蔽的海外网站（Google、GitHub 等）走 Shadowsocks 代理管道，
+        国内外网站的访问速度都能达到最优状态。
+      </div>
+    </div>
+    <div class="faq-item" role="listitem">
+      <button class="faq-btn" aria-expanded="false">
+        安卓该下载哪个架构的 APK？
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-body">
+        不确定的情况下直接下载 universal 通用版本即可，兼容所有架构。
+        如果想精准匹配：2019 年后的旗舰/中端手机通常是 arm64-v8a；老旧设备是 armeabi-v7a；
+        少数 Intel 处理器设备选 x86。智能电视/盒子需要下载 tv 专用 APK。
+      </div>
+    </div>
+    <div class="faq-item" role="listitem">
+      <button class="faq-btn" aria-expanded="false">
+        使用这类工具合法吗？
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-body">
+        Shadowsocks 本身是开源网络代理工具，广泛用于学术研究、技术开发、跨境业务等合规场景。
+        使用时请遵守所在国家及服务器所在国家的相关法律法规，不得用于任何违法用途。
+        所有使用者需自行对自己的使用行为负责。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="wrap">
+  <div class="cta-wrap reveal">
+    <h2>需要小火箭或美区账号？</h2>
+    <p>ReeGifts 提供美区 Apple ID 及礼品卡服务，购买后几分钟内即可使用，省去繁琐的注册流程。</p>
+    <div class="cta-perks">
+      <span>即买即用</span>
+      <span>支持支付宝/微信</span>
+      <span>同时提供礼品卡充值</span>
+      <span>全天候客服支持</span>
+    </div>
+    <a href="https://www.reegifts.com/" target="_blank" rel="noopener" class="btn btn-solid" style="font-size:.95rem;padding:.75rem 2.2rem;">
+      前往 ReeGifts 查看 →
+    </a>
+    <p class="disclaimer">* 本站为知识分享站点，购买相关事宜请以 ReeGifts 平台官方说明为准</p>
+  </div>
+</section>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div>© 2025 shadowsockshelp · 知识分享，仅供参考，请遵守当地法律法规</div>
+  <div style="display:flex;gap:1.25rem;flex-wrap:wrap;">
+    <a href="#tutorials">教程</a>
+    <a href="#download">下载</a>
+    <a href="#apple-id">美区ID</a>
+    <a href="#faq">FAQ</a>
+    <a href="https://www.reegifts.com/" target="_blank" rel="noopener">ReeGifts</a>
+  </div>
+</footer>
+
+<script>
+  // ── REVEAL ──
+  const io = new IntersectionObserver(es => {
+    es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.07, rootMargin: '0px 0px -30px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ── FAQ ──
+  document.querySelectorAll('.faq-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-btn').setAttribute('aria-expanded','false');
+      });
+      if(!isOpen){ item.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+    });
+  });
+
+  // ── SMOOTH ──
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if(t){ e.preventDefault(); t.scrollIntoView({ behavior:'smooth', block:'start' }); }
+    });
+  });
+</script>
+</body>
+</html>
