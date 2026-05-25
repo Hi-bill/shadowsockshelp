@@ -579,6 +579,9 @@
       z-index: 1;
     }
 
+    /* ── ANCHOR OFFSET: compensate for sticky nav height ── */
+    [id] { scroll-margin-top: 68px; }
+
     /* ── MOBILE ── */
     @media(max-width:640px){
       .nav-links { display:none; }
@@ -593,7 +596,7 @@
 
 <!-- ── NAV ── -->
 <nav role="navigation" aria-label="主导航">
-  <a href="#" class="nav-brand" aria-label="首页">
+  <a href="#hero-top" class="nav-brand" aria-label="首页">
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
       <rect width="20" height="20" rx="5" fill="#58a6ff"/>
       <path d="M5 10.5 Q10 4 15 10.5 Q10 17 5 10.5Z" fill="white" opacity=".9"/>
@@ -612,7 +615,7 @@
 </nav>
 
 <!-- ── HERO ── -->
-<header class="hero" role="banner">
+<header id="hero-top" class="hero" role="banner">
   <div class="hero-tag">2025 年持续更新 · 全平台覆盖</div>
   <h1>
     <span class="hl">Shadowsocks</span> 终极<br/>
@@ -1049,36 +1052,41 @@
 </footer>
 
 <script>
-  // ── REVEAL ──
-  const io = new IntersectionObserver(es => {
-    es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  // ── REVEAL on scroll ──
+  const revealIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); revealIO.unobserve(e.target); }
+    });
   }, { threshold: 0.07, rootMargin: '0px 0px -30px 0px' });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  document.querySelectorAll('.reveal').forEach(el => revealIO.observe(el));
 
-  // ── FAQ ──
+  // ── FAQ accordion ──
   document.querySelectorAll('.faq-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const item = btn.closest('.faq-item');
       const isOpen = item.classList.contains('open');
       document.querySelectorAll('.faq-item.open').forEach(i => {
         i.classList.remove('open');
-        i.querySelector('.faq-btn').setAttribute('aria-expanded','false');
+        i.querySelector('.faq-btn').setAttribute('aria-expanded', 'false');
       });
-      if(!isOpen){ item.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+      if (!isOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
     });
   });
 
-  // ── SMOOTH (with nav offset) ──
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const href = a.getAttribute('href');
-      if (href === '#') return;
-      const t = document.querySelector(href);
-      if (t) {
+  // ── Smooth scroll for all internal anchor links ──
+  // CSS scroll-margin-top handles the nav offset automatically.
+  // We only need to intercept clicks to trigger smooth behavior cross-browser.
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      if (!href || href === '#') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+      const target = document.getElementById(href.slice(1));
+      if (target) {
         e.preventDefault();
-        const navH = document.querySelector('nav') ? document.querySelector('nav').offsetHeight : 56;
-        const top = t.getBoundingClientRect().top + window.pageYOffset - navH - 8;
-        window.scrollTo({ top, behavior: 'smooth' });
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
   });
