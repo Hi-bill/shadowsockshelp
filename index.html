@@ -91,6 +91,7 @@
       background-size: 48px 48px;
       pointer-events: none;
       z-index: 0;
+      user-select: none;
     }
 
     /* ── GLOW ── */
@@ -100,6 +101,7 @@
       filter: blur(130px);
       pointer-events: none;
       z-index: 0;
+      user-select: none;
     }
     .orb-1 { width: 700px; height: 500px; background: rgba(88,166,255,.07); top: -200px; left: -200px; }
     .orb-2 { width: 500px; height: 500px; background: rgba(63,185,80,.05); bottom: 0; right: -100px; }
@@ -571,6 +573,12 @@
     .reveal { opacity: 0; transform: translateY(20px); transition: opacity .55s ease, transform .55s ease; }
     .reveal.in { opacity: 1; transform: translateY(0); }
 
+    /* ── STACKING: ensure all content above fixed orbs ── */
+    header, main, footer, .platform-strip, .stats-bar {
+      position: relative;
+      z-index: 1;
+    }
+
     /* ── MOBILE ── */
     @media(max-width:640px){
       .nav-links { display:none; }
@@ -762,7 +770,7 @@
     <p class="sdesc">iOS 上的代理工具（如 Shadowrocket）只在美区 App Store 上架，需要用美区账号登录才能下载。</p>
   </div>
   <div class="tut-grid reveal" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));">
-    <a href="https://www.reegifts.com/article/apple-id" target="_blank" rel="noopener" class="tut-card">
+    <a href="https://www.reegifts.com/" target="_blank" rel="noopener" class="tut-card">
       <div class="tc-top">
         <div class="tc-icon" style="background:rgba(188,140,255,.12)">🔑</div>
         <span class="tc-arrow">↗</span>
@@ -1060,11 +1068,18 @@
     });
   });
 
-  // ── SMOOTH ──
+  // ── SMOOTH (with nav offset) ──
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
-      const t = document.querySelector(a.getAttribute('href'));
-      if(t){ e.preventDefault(); t.scrollIntoView({ behavior:'smooth', block:'start' }); }
+      const href = a.getAttribute('href');
+      if (href === '#') return;
+      const t = document.querySelector(href);
+      if (t) {
+        e.preventDefault();
+        const navH = document.querySelector('nav') ? document.querySelector('nav').offsetHeight : 56;
+        const top = t.getBoundingClientRect().top + window.pageYOffset - navH - 8;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
     });
   });
 </script>
